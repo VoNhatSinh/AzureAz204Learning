@@ -1,7 +1,11 @@
+using Azure_Az204.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR();
+builder.Services.AddHostedService<ServiceBusListener>();
 
 var app = builder.Build();
 
@@ -24,6 +28,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+app.MapHub<MessageHub>("messageHub");
 
 
 app.Run();
