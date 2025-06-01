@@ -17,11 +17,14 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        _logger.LogInformation("Index called");
         return View();
     }
 
     public IActionResult Privacy()
     {
+        _logger.LogInformation("Privacy called");
+
         return View();
     }
 
