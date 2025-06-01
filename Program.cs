@@ -1,13 +1,16 @@
 using Azure_Az204.Services;
+using Microsoft.Extensions.Logging.ApplicationInsights;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddApplicationInsightsTelemetry(options =>
+builder.Logging.AddApplicationInsights(configureTelemetryConfiguration: configuration =>
 {
-    options.ConnectionString = builder.Configuration.GetConnectionString("APPLICATIONINSIGHTS_CONNECTION_STRING");
-});
+    configuration.ConnectionString = builder.Configuration.GetConnectionString("APPLICATIONINSIGHTS_CONNECTION_STRING");
+}, _ => { });
+builder.Logging.AddFilter<ApplicationInsightsLoggerProvider>("", LogLevel.Information);
+
 builder.Services.AddSignalR();
 builder.Services.AddHostedService<ServiceBusListener>();
 
