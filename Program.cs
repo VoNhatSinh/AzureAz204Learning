@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Logging.AddApplicationInsights(configureTelemetryConfiguration: configuration =>
 {
-    configuration.ConnectionString = builder.Configuration.GetConnectionString("APPLICATIONINSIGHTS_CONNECTION_STRING");
+    configuration.ConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
 }, _ => { });
 builder.Logging.AddFilter<ApplicationInsightsLoggerProvider>("Azure_Az204", LogLevel.Information);
 
