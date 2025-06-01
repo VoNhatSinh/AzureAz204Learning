@@ -23,7 +23,7 @@ public class HomeController : Controller
 
     public IActionResult Privacy()
     {
-        _logger.LogInformation("Privacy called");
+        _logger.LogWarning("Privacy called");
 
         return View();
     }
