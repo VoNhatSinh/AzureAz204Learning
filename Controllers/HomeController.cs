@@ -17,7 +17,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        ViewBag.AppInsigtsConnectionString = _config.GetConnectionString("APPSETTING_APPLICATIONINSIGHTS_CONNECTION_STRING");
+        ViewBag.AppInsigtsConnectionString = Environment.GetEnvironmentVariable("APPSETTING_APPLICATIONINSIGHTS_CONNECTION_STRING");
         _logger.LogInformation("Index called");
         return View();
     }
