@@ -5,11 +5,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Logging.AddApplicationInsights(configureTelemetryConfiguration: configuration =>
-{
-    configuration.ConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
-}, _ => { });
-builder.Logging.AddFilter<ApplicationInsightsLoggerProvider>("Azure_Az204", LogLevel.Information);
+// builder.Logging.AddApplicationInsights(configureTelemetryConfiguration: configuration =>
+// {
+//     configuration.ConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
+// }, _ => { });
+// builder.Logging.AddFilter<ApplicationInsightsLoggerProvider>("Azure_Az204", LogLevel.Information);
 
 builder.Services.AddSignalR();
 builder.Services.AddHostedService<ServiceBusListener>();
