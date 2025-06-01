@@ -33,7 +33,7 @@ namespace Azure_Az204.Services
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var connectionString = Environment.GetEnvironmentVariable("SERVICEBUSCONNSTR_ServiceBusConnectionString");
+            var connectionString = Environment.GetEnvironmentVariable("SERVICEBUSCONNSTR_ServiceBusConnectionString", EnvironmentVariableTarget.User);
             _client = new ServiceBusClient(connectionString, new ServiceBusClientOptions());
             var processor = _client.CreateProcessor(_configuration["QueueName"]);
             processor.ProcessMessageAsync += MessageHandler;
