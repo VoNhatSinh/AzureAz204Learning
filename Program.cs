@@ -9,7 +9,7 @@ builder.Logging.AddApplicationInsights(configureTelemetryConfiguration: configur
 {
     configuration.ConnectionString = builder.Configuration.GetConnectionString("APPLICATIONINSIGHTS_CONNECTION_STRING");
 }, _ => { });
-builder.Logging.AddFilter<ApplicationInsightsLoggerProvider>(null, LogLevel.Information);
+builder.Logging.AddFilter<ApplicationInsightsLoggerProvider>("Azure_Az204", LogLevel.Information);
 
 builder.Services.AddSignalR();
 builder.Services.AddHostedService<ServiceBusListener>();
