@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Logging.AddApplicationInsights(configureTelemetryConfiguration: configuration =>
 {
-    configuration.ConnectionString = Environment.GetEnvironmentVariable("APPSETTING_APPLICATIONINSIGHTS_CONNECTION_STRING");
+    configuration.ConnectionString = ConnectionStringHelper.GetAppInsightsInstrumentationKey();
 }, _ => { });
 builder.Logging.AddFilter<ApplicationInsightsLoggerProvider>("Azure_Az204", LogLevel.Information);
 
@@ -26,7 +26,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
-
+app.MapControllers();
 app.UseAuthorization();
 
 app.MapStaticAssets();
@@ -36,6 +36,7 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 app.MapHub<MessageHub>("messageHub");
+app.MapHub<EventGridHub>("eventGridHub");
 
 
 app.Run();

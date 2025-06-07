@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Azure_Az204.Models;
+using Azure_Az204.Services;
 using Azure.Messaging.ServiceBus;
 
 namespace Azure_Az204.Controllers;
@@ -28,10 +29,15 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult EventGrid()
+    {
+        return View();
+    }
+
     [HttpGet]
     public async Task<ActionResult> SendToQueue(string message)
     {
-        var client = new ServiceBusClient(Environment.GetEnvironmentVariable("SERVICEBUSCONNSTR_ServiceBusConnectionString"));
+        var client = new ServiceBusClient(ConnectionStringHelper.GetServiceBusConnectionString());
         var sender = client.CreateSender(_config["QueueName"]);
         using var messageBatch = await sender.CreateMessageBatchAsync();
         messageBatch.TryAddMessage(new ServiceBusMessage(message));
