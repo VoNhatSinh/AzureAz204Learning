@@ -58,5 +58,11 @@ namespace Azure_Az204.Controllers
                 return BadRequest("Invalid request format.");
             }
         }
+
+        [HttpOptions]
+        public IActionResult Options()
+        {
+            return Ok();
+        }
     }
 }
