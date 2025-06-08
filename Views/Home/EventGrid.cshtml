@@ -12,7 +12,7 @@
         .withUrl("/eventGridHub")
         .build();
 
-    connection.on("ReceiveMessage", function (message) {
+    connection.on("UpdateMessage", function (message) {
         const list = document.getElementById("messagesList");
         const li = document.createElement("li");
         li.textContent = message;

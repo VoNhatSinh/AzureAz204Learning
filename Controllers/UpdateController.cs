@@ -9,9 +9,9 @@ namespace Azure_Az204.Controllers
     [Route("api/[controller]")]
     public class UpdateController : ControllerBase
     {
-        private readonly IHubContext<MessageHub> _hubContext;
+        private readonly IHubContext<EventGridHub> _hubContext;
         private readonly ILogger<HomeController> _logger;
-        public UpdateController(IHubContext<MessageHub> hubContext, ILogger<HomeController> logger)
+        public UpdateController(IHubContext<EventGridHub> hubContext, ILogger<HomeController> logger)
         {
             _hubContext = hubContext;
             _logger = logger;
@@ -23,7 +23,7 @@ namespace Azure_Az204.Controllers
             _logger.LogInformation("Post called");
             using var reader = new StreamReader(Request.Body, Encoding.UTF8);
             var jsonContent = await reader.ReadToEndAsync();
-            await _hubContext.Clients.All.SendAsync("ReceiveMessage", jsonContent);
+            await _hubContext.Clients.All.SendAsync("UpdateMessage", jsonContent);
             return Ok();
         }
     }
