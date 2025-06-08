@@ -13,6 +13,15 @@ builder.Logging.AddFilter<ApplicationInsightsLoggerProvider>("Azure_Az204", LogL
 
 builder.Services.AddSignalR();
 builder.Services.AddHostedService<ServiceBusListener>();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
 
@@ -25,6 +34,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors();
 app.UseRouting();
 app.MapControllers();
 app.UseAuthorization();
