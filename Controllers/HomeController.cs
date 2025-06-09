@@ -22,9 +22,9 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Privacy()
+    public IActionResult ServiceBus()
     {
-        _logger.LogWarning("Privacy called");
+        _logger.LogWarning("ServiceBus called");
 
         return View();
     }
@@ -52,7 +52,7 @@ public class HomeController : Controller
         }
 
         ViewBag.Message = message;
-        return View("Privacy");
+        return View("ServiceBus");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
