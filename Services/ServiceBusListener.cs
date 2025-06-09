@@ -35,7 +35,12 @@ namespace Azure_Az204.Services
         {
             var connectionString = ConnectionStringHelper.GetServiceBusConnectionString();
             _client = new ServiceBusClient(connectionString, new ServiceBusClientOptions());
-            var processor = _client.CreateProcessor(_configuration["QueueName"]);
+            var processor = _client.CreateProcessor(_configuration["QueueName"], new ServiceBusProcessorOptions
+            {
+                MaxConcurrentCalls = 1,
+                ReceiveMode = ServiceBusReceiveMode.PeekLock,
+                AutoCompleteMessages = false
+            });
             processor.ProcessMessageAsync += MessageHandler;
             processor.ProcessErrorAsync += ErrorHandler;
             await processor.StartProcessingAsync(stoppingToken);
