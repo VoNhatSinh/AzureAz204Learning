@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Azure_Az204.Models;
 using Azure_Az204.Services;
 using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.EventGrid;
+using Microsoft.Azure.EventGrid.Models;
+using Microsoft.Rest;
 
 namespace Azure_Az204.Controllers;
 
@@ -31,6 +34,29 @@ public class HomeController : Controller
 
     public IActionResult EventGrid()
     {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult EventGrid(string userInput)
+    {
+        var topicKey = _config["NsvEventGridTopicKey"];
+        _logger.LogInformation($"NsvEventGridTopicKey_{topicKey}");
+        var client = new EventGridClient(new TopicCredentials(topicKey));
+        var events = new List<EventGridEvent>() {
+            new EventGridEvent()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Subject = "My Subject",
+                Data = new { userInput = userInput },
+                EventType = "microsoft.eventGrid.EventGridEvent",
+            }
+        };
+
+        client.PublishEventsWithHttpMessagesAsync("NsvTopic", events);
+
+        ViewBag.Message = $"You entered: {userInput}";
+
         return View();
     }
 

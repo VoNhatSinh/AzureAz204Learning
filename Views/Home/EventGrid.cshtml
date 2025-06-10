@@ -4,9 +4,19 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<h2>Live Messages:</h2>
+<h2>Live Messages from System Topic:</h2>
 <ul id="messagesList"></ul>
 
+<h2>Send message to Event Grid Custom Topic</h2>
+<form method="post" asp-controller="Home" asp-action="EventGrid">
+    <input type="text" name="userInput" />
+    <button type="submit">Submit</button>
+</form>
+
+@if(ViewBag.Message != null)
+{
+    <p>@ViewBag.Message</p>
+}
 <script>
     const connection = new signalR.HubConnectionBuilder()
         .withUrl("/eventGridHub")
