@@ -16,7 +16,8 @@ namespace Azure_Az204.Services
 
         public static string GetAppConfigurationConnectionString()
         {
-            return Environment.GetEnvironmentVariable("CUSTOMCONNSTR_AppConfiguration");
+            return Environment.GetEnvironmentVariable("CUSTOMCONNSTR_AppConfiguration")
+                   ?? Environment.GetEnvironmentVariable("APPSETTING_AppConfiguration");
         }
     }
 }
