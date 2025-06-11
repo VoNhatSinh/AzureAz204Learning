@@ -8,8 +8,7 @@ builder.Services.AddControllersWithViews();
 
 // dotnet user-secrets init
 // dotnet user-secrets set ConnectionStrings:AppConfiguration "<your-App-Configuration-connection-string>"
-var connectionString = builder.Configuration.GetConnectionString("AppConfiguration") ??
-                       throw new InvalidOperationException("The connection string 'AppConfiguration' was not found.");
+var connectionString = ConnectionStringHelper.GetAppConfigurationConnectionString();
 builder.Configuration.AddAzureAppConfiguration(connectionString);
 
 builder.Logging.AddApplicationInsights(configureTelemetryConfiguration: configuration =>
